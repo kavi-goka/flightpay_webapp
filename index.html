@@ -42,35 +42,45 @@
   }
 </script>
 <script>
-    let deferredPrompt;
+   let deferredPrompt;
+  let installButton;
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
-      // Stash the event so it can be triggered later
-      deferredPrompt = e;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
 
-      // Optionally, show a custom install button
-      const installButton = document.createElement('button');
+    // Check if the install button already exists; if not, create it
+    if (!installButton) {
+      installButton = document.createElement('button');
       installButton.textContent = 'Install App';
       installButton.style.position = 'fixed';
       installButton.style.bottom = '10px';
       installButton.style.right = '10px';
       document.body.appendChild(installButton);
+    }
 
-      installButton.addEventListener('click', () => {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-          deferredPrompt = null;
-          installButton.remove(); // Remove the button after interaction
-        });
+    // Show the install button
+    installButton.style.display = 'block';
+
+    installButton.addEventListener('click', () => {
+      // Show the install prompt
+      deferredPrompt.prompt();
+      
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+
+        // Clear the prompt and hide the button after interaction
+        deferredPrompt = null;
+        installButton.style.display = 'none';
       });
     });
+  });
   </script>
   <script src="main.dart.js"></script>
 </body>
