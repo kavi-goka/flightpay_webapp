@@ -48,7 +48,15 @@ const CORE = ["main.dart.js",
 "index.html",
 "flutter_bootstrap.js",
 "assets/AssetManifest.bin.json",
-"assets/FontManifest.json"];
+"assets/FontManifest.json",
+"assets/lib/images/EW.png",
+"assets/lib/images/EW_logo.png",
+"assets/lib/images/Investment-data-rafiki.png",
+ "assets/lib/images/chill_casual_blue.svg",
+  "assets/lib/images/chill_money.svg",
+  "assets/lib/images/money_man.svg",
+  "assets/lib/images/money_woman.png",
+  "assets/lib/images/money_woman.svg"];
 
 // During install, the TEMP cache is populated with the application shell files.
 self.addEventListener("install", (event) => {
