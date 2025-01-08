@@ -43,48 +43,35 @@
 </script>
 <script>
   let deferredPrompt;
-  let installButton;
 
-  // Check if the install prompt has been shown before
-  if (localStorage.getItem('installPromptShown') !== 'true') {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
-      // Stash the event so it can be triggered later
-      deferredPrompt = e;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
 
-      // Create the install button if it doesn't exist
-      if (!installButton) {
-        installButton = document.createElement('button');
-        installButton.textContent = 'Install App';
-        installButton.style.position = 'fixed';
-        installButton.style.bottom = '10px';
-        installButton.style.right = '10px';
-        document.body.appendChild(installButton);
-      }
+    // Optionally, you can add custom logic here to show a message or handle actions
 
-      // Show the install button
-      installButton.style.display = 'block';
+    // Automatically show the browser's native install prompt
+    // This doesn't work to directly trigger the prompt, but it ensures the app is ready
+    console.log('PWA is ready for installation.');
+  });
 
-      installButton.addEventListener('click', () => {
-        // Show the install prompt
-        deferredPrompt.prompt();
-
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-            localStorage.setItem('installPromptShown', 'true'); // Mark as shown
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-
-          // Hide the button after interaction
-          deferredPrompt = null;
-          installButton.style.display = 'none';
-        });
+  // If the user has interacted with the PWA, you can show the install button or prompt manually
+  // Example:
+  window.addEventListener('load', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt(); // You can trigger the prompt here, if needed
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
       });
-    });
-  }
+    }
+  });
 </script>
   <script src="main.dart.js"></script>
 </body>
