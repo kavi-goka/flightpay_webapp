@@ -3,7 +3,7 @@
     "short_name": "Flight Duty Pay",
     "start_url": ".",
     "display": "fullscreen",
-    "background_color": "#0175C2",
+    "background_color": "#FFFFFF",
     "theme_color": "#0175C2",
     "description": "Calculate your salary",
     "orientation": "portrait-primary",
