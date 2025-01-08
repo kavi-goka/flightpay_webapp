@@ -50,27 +50,20 @@
     // Stash the event so it can be triggered later
     deferredPrompt = e;
 
-    // Optionally, you can add custom logic here to show a message or handle actions
-
-    // Automatically show the browser's native install prompt
-    // This doesn't work to directly trigger the prompt, but it ensures the app is ready
-    console.log('PWA is ready for installation.');
-  });
-
-  // If the user has interacted with the PWA, you can show the install button or prompt manually
-  // Example:
-  window.addEventListener('load', () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt(); // You can trigger the prompt here, if needed
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      });
-    }
+    // Automatically show the browser's native install prompt after 3 seconds
+    setTimeout(() => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt(); // Trigger the install prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      }
+    }, 3000); // Delay of 3 seconds before prompting the user
   });
 </script>
   <script src="main.dart.js"></script>
