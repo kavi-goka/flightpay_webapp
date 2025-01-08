@@ -2,7 +2,7 @@
     "name": "Flight Duty Pay",
     "short_name": "Flight Duty Pay",
     "start_url": "/index.html",
-    "display": "fullscreen",
+    "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#FFFFFF",
     "description": "Calculate your salary",
