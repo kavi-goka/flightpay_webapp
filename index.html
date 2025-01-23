@@ -43,28 +43,27 @@
 </script>
 <script>
   let deferredPrompt;
+const installButton = document.getElementById('installBtn');
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent the mini-infobar from appearing on mobile
-    e.preventDefault();
-    // Stash the event so it can be triggered later
-    deferredPrompt = e;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installButton.style.display = 'block'; // Show the button
+});
 
-    // Automatically show the browser's native install prompt after 3 seconds
-    setTimeout(() => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt(); // Trigger the install prompt
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-          deferredPrompt = null;
-        });
+installButton.addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
       }
-    }, 3000); // Delay of 3 seconds before prompting the user
-  });
+      deferredPrompt = null;
+    });
+  }
+});
 </script>
   <script src="main.dart.js"></script>
 </body>
